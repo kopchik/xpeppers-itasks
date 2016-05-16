@@ -1,11 +1,12 @@
 #!/usr/bin/env python3
 
 """
-Calculates sales taxes. Please see README for description.
+Calculates sales taxes. Please see README for more detailed description.
 """
 
-import re       # regexp routines
 from decimal import Decimal, ROUND_HALF_EVEN  # fixed point arithmetics
+from sys import stdout
+import re  # regexp routines
 
 
 TAX_EXEMPT_MARKERS = "book chocolate food pills".split()
@@ -13,6 +14,10 @@ PATTERN = r"([0-9]+) (.+) at ([0-9]+\.[0-9]+)"
 SALES_TAX = Decimal("0.10")    # 10% sales tax
 IMPORT_DUTY = Decimal("0.05")  # 5% import duty
 OUTPUT_FMT = "{count} {descr}: {price}"
+
+
+class ParseError(Exception):
+  """ Parsing errors rise this. """
 
 
 def what_taxes(descr):
@@ -41,11 +46,7 @@ def tax_round005(price, amount):
   return tax
 
 
-
-# TODO: error handling
 def parse(src, pattern=PATTERN):
-  result = []
-  errors = []
   for line in src.splitlines():
     line = line.strip()
     if not line:
@@ -53,24 +54,14 @@ def parse(src, pattern=PATTERN):
     # we do not compile the regexp because it is automatically compiled and cached inside re module
     match = re.match(pattern, line)
     if not match:
-      errors.append("failed to parse: %s" % line)
-      continue
+      raise ParseError("failed to parse: %s" % line)
     # actually we don't know the currency, but let's think it is dollars
     count, descr, price = match.groups()
     count = int(count)
     yield (count, descr, Decimal(price))
 
 
-def apply_taxes(price, exempt, imported):
-  newprice = price
-  if not exempt:
-    newprice = tax_round005(price, SALES_TAX)
-  if imported:
-    amount *= Decimal("1.05")
-    amount = myround(amount)
-
-
-def main(data):
+def main(data, stream=stdout):
   sales_taxes = Decimal("0.00")
   total = Decimal("0.00")
   for count, descr, price in parse(data):
@@ -85,14 +76,14 @@ def main(data):
       if apply_import_duty:
          subtotal += tax_round005(price, SALES_TAX)
       total += subtotal
-    print(OUTPUT_FMT.format(count=count, descr=descr, price=subtotal))
-  print("Sales Taxes:", sales_taxes)
-  print("Total:", total)
+    print(OUTPUT_FMT.format(count=count, descr=descr, price=subtotal), file=stream)
+  print("Sales Taxes:", sales_taxes, file=stream)
+  print("Total:", total, file=stream)
 
 
 if __name__ == '__main__':
   data= """
-2 book at 12.49
+1 book at 12.49
 1 music CD at 14.99
 1 chocolate bar at 0.85
 """
