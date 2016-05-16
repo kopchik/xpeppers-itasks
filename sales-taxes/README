@@ -1,0 +1,39 @@
+## General Architecture
+Written in functional style
+The idea is to split the program into small units easy to test.
+There is one ``main'' function that glues all them together and produces the output.
+
+I used fixed-point arithmetics for storing and processing money values.
+Floating-point operations are no good for money [1].
+It is possible to use libraries especially designed for this, but I think for an interview
+task it's better to stick with built-in data structures.
+The handling of money operations follows best practices [2].
+The code is checked with a static code checker (pyflakes3) and formatting checker (pep8).
+
+I decided not to add a configuration layer because it feels like an over-engineering for this task.
+
+## Tests
+
+The program id accompanied wnit-tests and a few ``full-stack'' ~~integration~~ validation tests to ensure the final result.
+
+
+## Performance analysis
+
+There are no obious performance bottlenecks at first glance. TODO
+Regexps are cached internally.
+
+## Error handling
+
+It uses ``let it fail'' and ``all or nothing'' error handling approaches: an error in computation will terminate the program with no results, but with error message.
+
+## Other
+
+
+It was not mentioned explicitly in the task, but I infered that the first field (column) in the input is the number of items.
+This is taken into account.
+
+
+## References
+
+[1] http://stackoverflow.com/questions/3730019/why-not-use-double-or-float-to-represent-currency
+[2] http://www.yacoset.com/how-to-handle-currency-conversions
