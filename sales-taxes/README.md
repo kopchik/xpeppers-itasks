@@ -2,6 +2,7 @@
 
 In two words: calculate taxes and total price for a list of items (see https://github.com/xpeppers/sales-taxes-problem for details).
 
+
 ## General Architecture
 Written in functional style.
 The idea is to split the program into small units easy to test.
@@ -16,6 +17,7 @@ The code is checked with a static code checker (``pyflakes3``) and formatting ch
 
 I decided not to add a configuration layer because it feels like an over-engineering for this task.
 
+
 ## Tests
 
 The program id accompanied wnit-tests and a few "full-stack" ~~integration~~ validation tests to ensure the final result.
@@ -29,9 +31,11 @@ The coverage is not 100% (particulary, functions not tested for invalid input), 
 At first glance there are no obious performance bottlenecks.
 Regexps are cached internally.
 
+
 ## Error handling
 
 It uses "let it fail" and "all or nothing" error handling approaches: an error in computation will terminate the program with no results, but with error message.
+
 
 ## Other
 
@@ -49,6 +53,7 @@ I'm not sure provided tests are 100% correct. There are two concerns:
 11.25 + round(11.25*0.05) = 11.25 + round(0.5625) = 11.25 + 0.6 = 11.80
 ~~~
 So we got 11.80 here, while in the provided output it is 11.85 which looks incorrect to me. And there other similar problems...
+
 
 ## References
 

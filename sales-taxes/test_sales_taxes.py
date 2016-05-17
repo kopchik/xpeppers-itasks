@@ -1,4 +1,5 @@
-from sales_taxes import *
+from sales_taxes import round005, process_input
+from decimal import Decimal
 from io import StringIO
 
 tests = [
@@ -45,6 +46,7 @@ Total: 74.68
 """)
 ]
 
+# TODO: give functions incorrect input
 
 def test_round005():
     assert round005(Decimal("0.01")) == Decimal("0.00")
@@ -54,7 +56,7 @@ def test_round005():
     assert round005(Decimal("0.67")) == Decimal("0.65")
 
 
-def test_main():
+def test_process_input():
     for inpt, expected in tests:
         out = StringIO()
         process_input(inpt, stream=out)

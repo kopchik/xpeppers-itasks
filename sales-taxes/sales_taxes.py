@@ -4,7 +4,7 @@
 Calculates sales taxes. Please see README for more detailed description.
 """
 
-from decimal import Decimal, ROUND_HALF_EVEN  # fixed point arithmetics
+from decimal import Decimal  # fixed point arithmetics
 from sys import stdin, stdout
 import re  # regexp routines
 
@@ -67,6 +67,10 @@ def tax_round005(price, amount):
 
 
 def process_input(data, stream=stdout):
+    """
+        Performs all the duties to convert receipts without taxes
+        into a well-structured and validated receipt with taxes and totals.
+    """
     sales_taxes = Decimal("0.00")
     total = Decimal("0.00")
     for count, descr, price in parse(data):
