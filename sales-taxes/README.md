@@ -1,6 +1,7 @@
 # Sales Taxes Problem
 
 In two words: calculate taxes and total price for a list of items (see https://github.com/xpeppers/sales-taxes-problem for details).
+**TL;DR:** just run ``./sales_taxes.py`` for input from stdin. Or ``py.test -sv`` to test against provided test data (known to fail see below why).
 
 
 ## General Architecture
@@ -20,15 +21,15 @@ I decided not to add a configuration layer because it feels like an over-enginee
 
 ## Tests
 
-The program id accompanied wnit-tests and a few "full-stack" ~~integration~~ validation tests to ensure the final result.
+The program is accompanied with unit-tests and a few "full-stack" ~~integration~~ validation tests to ensure the final result.
 Just run ``py.test -sv`` in the program's folder.
 Tests are known to fail, please see "Other" section for info.
-The coverage is not 100% (particulary, functions not tested for invalid input), but... I'm on vacation, sorry :).
+The coverage is not 100% (particularly, functions not tested for invalid input), but... I'm on vacation, sorry :).
 
 
 ## Performance analysis
 
-At first glance there are no obious performance bottlenecks.
+At first glance there are no obvious performance bottlenecks.
 Regexps are cached internally.
 
 
@@ -39,7 +40,7 @@ It uses "let it fail" and "all or nothing" error handling approaches: an error i
 
 ## Other
 
-It was not mentioned explicitly in the task, but I infered that the first field (column) in the input is the number of items.
+It was not mentioned explicitly in the task, but I inferred that the first field (column) in the input is the number of items.
 This is taken into account.
 
 The format provided for input does not allow for precise detection of goods exempt from sales taxes. I used simple keyword matching to detect "books, food, and medical products that are exempt".
@@ -57,5 +58,5 @@ So we got 11.80 here, while in the provided output it is 11.85 which looks incor
 
 ## References
 
-[1] http://stackoverflow.com/questions/3730019/why-not-use-double-or-float-to-represent-currency  
+[1] http://stackoverflow.com/questions/3730019/why-not-use-double-or-float-to-represent-currency
 [2] http://www.yacoset.com/how-to-handle-currency-conversions
