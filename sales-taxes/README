@@ -1,3 +1,7 @@
+# Sales Taxes Problem
+
+In two words: calculate taxes and total price for a list of items (see https://github.com/xpeppers/sales-taxes-problem for details).
+
 ## General Architecture
 Written in functional style
 The idea is to split the program into small units easy to test.
