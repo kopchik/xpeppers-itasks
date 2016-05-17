@@ -26,7 +26,7 @@ The coverage is not 100% (particulary, functions not tested for invalid input), 
 
 ## Performance analysis
 
-At first glance there are no obious performance bottlenecks at first glance.
+At first glance there are no obious performance bottlenecks.
 Regexps are cached internally.
 
 ## Error handling
@@ -48,7 +48,7 @@ I'm not sure provided tests are 100% correct. There are two concerns:
 ~~~
 11.25 + round(11.25*0.05) = 11.25 + round(0.5625) = 11.25 + 0.6 = 11.80
 ~~~
-So we got 11.80 here, while in the provided output it is 11.85 which looks incorrect to me.
+So we got 11.80 here, while in the provided output it is 11.85 which looks incorrect to me. And there other similar problems...
 
 ## References
 
