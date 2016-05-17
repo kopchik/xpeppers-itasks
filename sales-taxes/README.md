@@ -2,7 +2,7 @@
 
 In two words: calculate taxes and total price for a list of items (see https://github.com/xpeppers/sales-taxes-problem for details).
 
-**TL;DR:** just run ``./sales_taxes.py`` for input from stdin. Or ``py.test -sv`` to test against provided test data (known to fail see below why).
+**TL;DR:** just run ``./sales_taxes.py`` for input from stdin. Or ``py.test -sv`` to test against provided test data (known to fail, see below why).
 
 
 ## General Architecture

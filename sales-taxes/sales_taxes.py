@@ -21,7 +21,7 @@ class ParseError(Exception):
 
 
 def parse(src, pattern=PATTERN):
-    """ Converts plain-text input into computer-friendly form. """
+    """ Converts plain-text input into a computer-friendly form. """
     for line in src.splitlines():
         line = line.strip()  # remove meaningless white-spaces, just best practices
         if not line or line.isspace():  # line.isspace() is redundand on stripped lines
@@ -40,10 +40,11 @@ def what_taxes(descr):
     """ Extract tax information from description.
         Returns tuple of what taxes to be paid.
     """
+    # default taxes to pay unless something in description tells otherwise
     sales_tax = True
     import_tax = False
-    descr = descr.lower()  # for case insensitive matching
 
+    descr = descr.lower()  # for case insensitive matching
     if descr.find("imported") != -1:
         import_tax = True
 
@@ -76,13 +77,13 @@ def process_input(data, stream=stdout):
     for count, descr, price in parse(data):
         subtotal = Decimal("0.00")
         for i in range(count):
-            apply_sales_tax, apply_import_duty = what_taxes(descr)
+            pay_sales_tax, pay_import_duty = what_taxes(descr)
             subtotal += price
-            if apply_sales_tax:
+            if pay_sales_tax:
                 sales_tax = tax_round005(price, SALES_TAX)
                 sales_taxes += sales_tax
                 subtotal += sales_tax
-            if apply_import_duty:
+            if pay_import_duty:
                 import_duty = tax_round005(price, IMPORT_DUTY)
                 subtotal += import_duty
                 sales_taxes += import_duty
