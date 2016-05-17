@@ -15,11 +15,14 @@ I decided not to add a configuration layer because it feels like an over-enginee
 ## Tests
 
 The program id accompanied wnit-tests and a few ``full-stack'' ~~integration~~ validation tests to ensure the final result.
+Just run ``py.test -sv'' in the program's folder.
+Tests are known to fail, please see "Other" section for info.
+The coverage is not 100% (particulary, functions not tested for invalid input, but... I'm on vacation, sorry :).
 
 
 ## Performance analysis
 
-There are no obious performance bottlenecks at first glance. TODO
+At first glance there are no obious performance bottlenecks at first glance.
 Regexps are cached internally.
 
 ## Error handling
@@ -28,10 +31,18 @@ It uses ``let it fail'' and ``all or nothing'' error handling approaches: an err
 
 ## Other
 
-
 It was not mentioned explicitly in the task, but I infered that the first field (column) in the input is the number of items.
 This is taken into account.
 
+I'm not sure provided tests are 100% correct. There are two concerns:
+
+1. In test 3 in output "1 box of imported chocolates at 11.25" the word "imported" does not match the position in the input "1 imported box of chocolates: 11.85".
+
+2. The way rounding is applied remains obscured to me. For "1 box of imported chocolates at 11.25" the provided output does not match manual calculation:
+~~~
+11.25 + round(11.25*0.05) = 11.25 + round(0.5625) = 11.25 + 0.6 = 11.80
+~~~
+So we got 11.80 here, while in the provided output it is 11.85 which looks incorrect to me.
 
 ## References
 

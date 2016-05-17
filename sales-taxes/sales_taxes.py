@@ -5,7 +5,7 @@ Calculates sales taxes. Please see README for more detailed description.
 """
 
 from decimal import Decimal, ROUND_HALF_EVEN  # fixed point arithmetics
-from sys import stdout
+from sys import stdin, stdout
 import re  # regexp routines
 
 
@@ -17,7 +17,7 @@ OUTPUT_FMT = "{count} {descr}: {price}"
 
 
 class ParseError(Exception):
-    """ Parsing errors rise this. """
+    """ Parsing errors raise this. """
 
 
 def parse(src, pattern=PATTERN):
@@ -55,15 +55,18 @@ def what_taxes(descr):
     return sales_tax, import_tax
 
 
+def round005(x):
+  """ Rounds towards nearest 0.05. """
+  return Decimal(round(x/Decimal("0.05")))*Decimal("0.05")
+
+
 def tax_round005(price, amount):
     """ Apply taxes with rounding towards nearest 0.05. """
-    tax = price * amount
-    # round towards nearest 0.05
-    tax = tax.quantize(Decimal('0.01'), rounding=ROUND_HALF_EVEN)
+    tax = round005(price * amount)
     return tax
 
 
-def main(data, stream=stdout):
+def process_input(data, stream=stdout):
     sales_taxes = Decimal("0.00")
     total = Decimal("0.00")
     for count, descr, price in parse(data):
@@ -76,7 +79,9 @@ def main(data, stream=stdout):
                 sales_taxes += sales_tax
                 subtotal += sales_tax
             if apply_import_duty:
-                subtotal += tax_round005(price, SALES_TAX)
+                import_duty = tax_round005(price, IMPORT_DUTY)
+                subtotal += import_duty
+                sales_taxes += import_duty
             total += subtotal
         print(OUTPUT_FMT.format(count=count,
                                 descr=descr, price=subtotal), file=stream)
@@ -85,9 +90,6 @@ def main(data, stream=stdout):
 
 
 if __name__ == '__main__':
-    data = """
-1 book at 12.49
-1 music CD at 14.99
-1 chocolate bar at 0.85
-"""
-    main(data)
+    print("Program for calculating taxes.")
+    print("Reading from stdin (Ctrl+D to finish)")
+    process_input(stdin.read())
