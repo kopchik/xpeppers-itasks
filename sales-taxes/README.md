@@ -1,6 +1,7 @@
 # Sales Taxes Problem
 
 In two words: calculate taxes and total price for a list of items (see https://github.com/xpeppers/sales-taxes-problem for details).
+
 **TL;DR:** just run ``./sales_taxes.py`` for input from stdin. Or ``py.test -sv`` to test against provided test data (known to fail see below why).
 
 
@@ -24,6 +25,7 @@ I decided not to add a configuration layer because it feels like an over-enginee
 The program is accompanied with unit-tests and a few "full-stack" ~~integration~~ validation tests to ensure the final result.
 Just run ``py.test -sv`` in the program's folder.
 Tests are known to fail, please see "Other" section for info.
+
 The coverage is not 100% (particularly, functions not tested for invalid input), but... I'm on vacation, sorry :).
 
 
@@ -53,7 +55,7 @@ I'm not sure provided tests are 100% correct. There are two concerns:
 ~~~
 11.25 + round(11.25*0.05) = 11.25 + round(0.5625) = 11.25 + 0.6 = 11.80
 ~~~
-So we got 11.80 here, while in the provided output it is 11.85 which looks incorrect to me. And there other similar problems...
+So we got 11.80 here, while in the provided output it is 11.85 which looks incorrect to me. And there are other similar problems...
 
 
 ## References
